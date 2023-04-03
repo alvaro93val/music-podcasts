@@ -1,22 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import Layout from 'Layout';
+import DetailsPodcast from 'pages/detailsPodcast';
+import Main from 'pages/main';
+import Podcast from 'pages/podcast';
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div>
+      <header>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route path="/" element={<Main />} />
+            <Route path="/podcast/:podcastId" element={<Podcast />} />
+            <Route path="/podcast/:podcastId/episode/:episodeId" element={<DetailsPodcast />} />
+            <Route path="*" element={<div>404, Not Found!</div>} />
+          </Route>
+        </Routes>
       </header>
     </div>
   );
