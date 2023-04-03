@@ -14,7 +14,6 @@ const get100Podcasts = () => {
   } else {
     return request
       .then((response) => {
-        console.log(response.data);
         localStorage.setItem('date', new Date().toISOString());
         localStorage.setItem('podcast', JSON.stringify(response.data));
         return response.data;
