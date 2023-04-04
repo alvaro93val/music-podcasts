@@ -21,6 +21,9 @@ const ListEpisodes = (props) => {
   };
 
   const formatDuration = (duration) => {
+    if (typeof duration === 'string' && duration.includes(':')) {
+      return duration;
+    }
     const hours = Math.floor(Math.floor(duration / 60) / 60);
     const minutes = Math.floor(duration / 60) % 60;
     const seconds = duration % 60;

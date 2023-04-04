@@ -27,22 +27,22 @@ const Podcast = () => {
         title: p.collectionName,
         image: p.artworkUrl600,
         author: p.artistName
-        // description: p.summary.label
       };
 
       services.getDetailsPodcast(p.feedUrl, p.collectionId).then((data) => {
-        console.log('data', data);
+        console.log('getDetailsPodcast', data);
 
-        newPodcast.description = data.channel.summary;
+        newPodcast.description =
+          data.rss.channel['content:encoded'] ?? data.rss.channel.description;
         const episodes = [];
-        data.channel.items.forEach((episode) => {
+        data.rss.channel.item.forEach((episode) => {
           console.log('episode', episode);
           episodes.push({
-            title: episode.item.title,
-            date: episode.item.pubDate,
-            duration: episode.item.duration,
-            description: episode.item.summary,
-            play: episode.item.enclosure
+            title: episode.title,
+            date: episode.pubDate,
+            duration: episode['itunes:duration'],
+            description: episode['content:encoded'],
+            play: episode.enclosure ? episode.enclosure['@_url'] : episode.link
           });
         });
 

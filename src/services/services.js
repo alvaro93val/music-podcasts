@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { XMLParser, XMLValidator } from 'fast-xml-parser';
 const url100Podcasts = 'https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json';
 const urlOnePodcast = 'https://itunes.apple.com/lookup?id=';
 
@@ -48,7 +49,7 @@ const getOnePodcast = (podcastId) => {
 };
 
 const getDetailsPodcast = (feedUrl, podcastId) => {
-  const request = axios.get(`${feedUrl}.json`);
+  const request = axios.get(`${feedUrl}`);
   const date = localStorage.getItem(`dateDetails-${podcastId}`);
   const details = localStorage.getItem(`details-${podcastId}`);
 
@@ -57,9 +58,31 @@ const getDetailsPodcast = (feedUrl, podcastId) => {
   } else {
     return request
       .then((response) => {
+        console.log('XML', response);
+        if (!XMLValidator.validate(response.data)) {
+          throw new Error('XML not valid');
+        }
+        const options = {
+          attributeNamePrefix: '@_',
+          attrNodeName: 'attr',
+          textNodeName: '#text',
+          ignoreAttributes: false,
+          ignoreNameSpace: false,
+          allowBooleanAttributes: true,
+          parseNodeValue: true,
+          parseAttributeValue: true,
+          trimValues: true,
+          cdataTagName: '__cdata',
+          cdataPositionChar: '\\c',
+          parseTrueNumberOnly: false,
+          arrayMode: true,
+          stopNodes: ['parse-me-as-string']
+        };
+        const parser = new XMLParser(options);
+        const jsonData = parser.parse(response.data);
         localStorage.setItem(`dateDetails-${podcastId}`, new Date().toISOString());
-        localStorage.setItem(`details-${podcastId}`, JSON.stringify(response.data));
-        return response.data;
+        localStorage.setItem(`details-${podcastId}`, JSON.stringify(jsonData));
+        return jsonData;
       })
       .catch((error) => console.error(error));
   }
