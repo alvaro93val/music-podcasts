@@ -6,7 +6,7 @@ import LoaderContext from 'context/Loader';
 import React, { useContext, useEffect, useState } from 'react';
 import services from 'services/services';
 
-function Main() {
+const Main = () => {
   const [originalPodcasts, setOriginalPodcasts] = useState([]);
   const [podcasts, setPodcasts] = useState([]);
   const { showLoader, setShowLoader } = useContext(LoaderContext);
@@ -20,7 +20,8 @@ function Main() {
           id: p.id.attributes['im:id'],
           title: p['im:name'].label,
           image: p['im:image'][p['im:image'].length - 1].label,
-          author: p['im:artist'].label
+          author: p['im:artist'].label,
+          description: p.summary.label
         });
       });
 
@@ -33,26 +34,38 @@ function Main() {
   }, []);
 
   const handleSearch = ({ target }) => {
-    const filterByTitle = originalPodcasts.filter((p) => p.title.toLowerCase().includes(target.value.toLowerCase()));
-    const filterByAuthor = originalPodcasts.filter((p) => p.author.toLowerCase().includes(target.value.toLowerCase()));
+    const filterByTitle = originalPodcasts.filter((p) =>
+      p.title.toLowerCase().includes(target.value.toLowerCase())
+    );
+    const filterByAuthor = originalPodcasts.filter((p) =>
+      p.author.toLowerCase().includes(target.value.toLowerCase())
+    );
     const newPodcasts = new Set(filterByTitle.concat(filterByAuthor));
 
     setPodcasts([...newPodcasts]);
   };
 
-  console.log(podcasts);
+  console.log('podcasts', podcasts);
   return (
     <div>
       {!showLoader ? (
         <Box margin="2%">
           <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={2}>
             <Avatar sx={{ bgcolor: blue[500] }}>{podcasts.length}</Avatar>
-            <TextField id="outlined-basic" label="Filter podcasts..." variant="outlined" onChange={handleSearch} />
+            <TextField
+              id="outlined-basic"
+              label="Filter podcasts..."
+              variant="outlined"
+              onChange={handleSearch}
+            />
           </Stack>
           {podcasts.length ? (
             podcasts.map((podcast) => {
               return (
-                <ListItem key={podcast.id} style={{ float: 'left', display: 'inline', width: '25%' }}>
+                <ListItem
+                  key={podcast.id}
+                  style={{ float: 'left', display: 'inline', width: '25%' }}
+                >
                   <CardMain key={podcast.id} cardMain={podcast} />
                 </ListItem>
               );
@@ -66,6 +79,6 @@ function Main() {
       )}
     </div>
   );
-}
+};
 
 export default Main;

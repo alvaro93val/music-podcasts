@@ -11,13 +11,19 @@ const Layout = () => {
     setShowLoader(true);
   }, [location]);
 
-  console.log(showLoader);
+  console.log('showLoader', showLoader);
 
   return (
     <div>
       <div>
         <Box marginX="2%">
-          <Grid container direction="row" justifyContent="space-between" alignItems="center" height={40}>
+          <Grid
+            container
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            height={40}
+          >
             <Link to="/" style={{ textDecoration: 'none' }}>
               <Typography variant="h6" color="blue">
                 Podcaster

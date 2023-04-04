@@ -5,9 +5,13 @@ const LoaderContext = createContext({
   setShowLoader: null
 });
 
-export function LoaderProvider({ children }) {
+export const LoaderProvider = ({ children }) => {
   const [showLoader, setShowLoader] = useState(true);
 
-  return <LoaderContext.Provider value={{ showLoader, setShowLoader }}>{children}</LoaderContext.Provider>;
-}
+  return (
+    <LoaderContext.Provider value={{ showLoader, setShowLoader }}>
+      {children}
+    </LoaderContext.Provider>
+  );
+};
 export default LoaderContext;

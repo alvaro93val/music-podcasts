@@ -6,7 +6,7 @@ import Podcast from 'pages/podcast';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-function App() {
+const App = () => {
   return (
     <div>
       <header>
@@ -23,6 +23,6 @@ function App() {
       </header>
     </div>
   );
-}
+};
 
 export default App;
