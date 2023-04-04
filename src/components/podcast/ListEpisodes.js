@@ -6,6 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 
 const ListEpisodes = (props) => {
   const formatNumber = (number) => {
@@ -44,13 +45,20 @@ const ListEpisodes = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.detailsPodcast.map((episode) => (
+          {props.detailsPodcast.map((episode, index) => (
             <TableRow
               key={episode.title}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {episode.title}
+                <Link
+                  to={`/podcast/${episode.podcastId}/episode/${
+                    props.detailsPodcast.length - index
+                  }`}
+                  style={{ textDecoration: 'none' }}
+                >
+                  {episode.title}
+                </Link>
               </TableCell>
               <TableCell align="right">{formatDate(episode.date)}</TableCell>
               <TableCell align="right">{formatDuration(episode.duration)}</TableCell>

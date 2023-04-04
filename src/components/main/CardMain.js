@@ -12,7 +12,11 @@ const CardMain = (props) => {
   return (
     <Button onClick={() => navigate(`/podcast/${props.cardMain.id}`)}>
       <Card sx={{ height: 320, width: 300 }} elevation={9}>
-        <CardMedia sx={{ height: 140 }} image={props.cardMain.image} title={props.cardMain.title} />
+        <CardMedia
+          sx={{ width: 150, height: 150, borderRadius: 75, display: '-webkit-inline-box' }}
+          image={props.cardMain.image}
+          title={props.cardMain.title}
+        />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             {props.cardMain.title}

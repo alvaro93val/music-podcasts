@@ -13,14 +13,8 @@ const Podcast = () => {
   const [details, setDetails] = useState([]);
   const { showLoader, setShowLoader } = useContext(LoaderContext);
 
-  console.log('podcastId', podcastId);
-  console.log('podcast', podcast);
-  console.log('showLoader', showLoader);
-  console.log('details', details);
-
   useEffect(() => {
     services.getOnePodcast(podcastId).then((data) => {
-      console.log('data', data);
       const p = data.results[0];
       const newPodcast = {
         id: p.collectionId,
@@ -30,14 +24,12 @@ const Podcast = () => {
       };
 
       services.getDetailsPodcast(p.feedUrl, p.collectionId).then((data) => {
-        console.log('getDetailsPodcast', data);
-
         newPodcast.description =
           data.rss.channel['content:encoded'] ?? data.rss.channel.description;
         const episodes = [];
         data.rss.channel.item.forEach((episode) => {
-          console.log('episode', episode);
           episodes.push({
+            podcastId: p.collectionId,
             title: episode.title,
             date: episode.pubDate,
             duration: episode['itunes:duration'],
@@ -46,8 +38,6 @@ const Podcast = () => {
           });
         });
 
-        console.log('newPodcast', newPodcast);
-        console.log('episodes', episodes);
         setPodcast(newPodcast);
         setDetails(episodes);
       });
@@ -75,7 +65,7 @@ const Podcast = () => {
                 justifyContent="flex-start"
                 alignItems="center"
                 spacing={2}
-                width="100%"
+                width="70%"
               >
                 <AppBar position="static" color="transparent" elevation={9}>
                   <Toolbar>

@@ -2,6 +2,7 @@ import axios from 'axios';
 import { XMLParser, XMLValidator } from 'fast-xml-parser';
 const url100Podcasts = 'https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json';
 const urlOnePodcast = 'https://itunes.apple.com/lookup?id=';
+const urlAllowCors = 'https://api.allorigins.win/raw?url=';
 
 const get100Podcasts = () => {
   const request = axios.get(url100Podcasts);
@@ -31,7 +32,7 @@ const isLessOneDay = (date) => {
 };
 
 const getOnePodcast = (podcastId) => {
-  const request = axios.get(`https://api.allorigins.win/raw?url=${urlOnePodcast}${podcastId}`);
+  const request = axios.get(`${urlAllowCors}${urlOnePodcast}${podcastId}`);
   const date = localStorage.getItem(`dateOnePodcast-${podcastId}`);
   const podcast = localStorage.getItem(`onePodcast-${podcastId}`);
 
@@ -58,7 +59,6 @@ const getDetailsPodcast = (feedUrl, podcastId) => {
   } else {
     return request
       .then((response) => {
-        console.log('XML', response);
         if (!XMLValidator.validate(response.data)) {
           throw new Error('XML not valid');
         }

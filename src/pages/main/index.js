@@ -45,7 +45,6 @@ const Main = () => {
     setPodcasts([...newPodcasts]);
   };
 
-  console.log('podcasts', podcasts);
   return (
     <div>
       {!showLoader ? (

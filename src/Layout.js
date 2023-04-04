@@ -11,8 +11,6 @@ const Layout = () => {
     setShowLoader(true);
   }, [location]);
 
-  console.log('showLoader', showLoader);
-
   return (
     <div>
       <div>
