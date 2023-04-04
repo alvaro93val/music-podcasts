@@ -33,7 +33,8 @@ const DetailsPodcast = () => {
           title: episodes[episodeId - 1].title,
           date: episodes[episodeId - 1].pubDate,
           duration: episodes[episodeId - 1]['itunes:duration'],
-          description: episodes[episodeId - 1]['content:encoded'],
+          description:
+            episodes[episodeId - 1]['content:encoded'] ?? episodes[episodeId - 1].description,
           play: episodes[episodeId - 1].enclosure
             ? episodes[episodeId - 1].enclosure['@_url']
             : episodes[episodeId - 1].link

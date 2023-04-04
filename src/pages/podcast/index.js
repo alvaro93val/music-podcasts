@@ -33,7 +33,7 @@ const Podcast = () => {
             title: episode.title,
             date: episode.pubDate,
             duration: episode['itunes:duration'],
-            description: episode['content:encoded'],
+            description: episode['content:encoded'] ?? episodes.description,
             play: episode.enclosure ? episode.enclosure['@_url'] : episode.link
           });
         });
