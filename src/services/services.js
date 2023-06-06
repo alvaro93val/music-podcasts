@@ -8,8 +8,6 @@ const get100Podcasts = () => {
   const request = axios.get(url100Podcasts);
   const date = localStorage.getItem('date100podcast');
   const podcasts = localStorage.getItem('100podcasts');
-  console.error(date);
-  console.error(podcasts);
 
   if (date && podcasts && isLessOneDay(date)) {
     return new Promise((resolve) => resolve(JSON.parse(podcasts)));

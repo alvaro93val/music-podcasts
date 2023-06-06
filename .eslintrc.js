@@ -9,7 +9,8 @@ module.exports = {
     es2021: true,
     node: true
   },
-  extends: ['plugin:react/recommended', 'standard', 'prettier'],
+  extends: ['eslint:recommended', 'plugin:react/recommended'],
+  parser: '@typescript-eslint/parser',
   overrides: [],
   parserOptions: {
     ecmaFeatures: {
@@ -21,6 +22,7 @@ module.exports = {
   plugins: ['react'],
   rules: {
     'no-unused-vars': RULES.WARN,
+    'ban-ts-comment': RULES.OFF,
     'react/prop-types': RULES.OFF,
     'react/react-in-jsx-scope': RULES.OFF
   }
